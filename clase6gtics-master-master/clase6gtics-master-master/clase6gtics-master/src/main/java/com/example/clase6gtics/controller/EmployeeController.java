@@ -53,12 +53,14 @@ public class EmployeeController {
                                   @RequestParam("hiredateStr") String hiredateStr) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
         try {
             employee.setBirthdate(formatter.parse(birthdateStr));
             employee.setHiredate(formatter.parse(hiredateStr));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
 
         employeeRepository.save(employee);
         return "redirect:/employee";
@@ -68,6 +70,7 @@ public class EmployeeController {
     public String editarEmpleado(Model model, @RequestParam("id") int id,
                                  @ModelAttribute("employee") Employee employee) {
         Optional<Employee> optional = employeeRepository.findById(id);
+
 
         if (optional.isPresent()) {
             employee = optional.get();

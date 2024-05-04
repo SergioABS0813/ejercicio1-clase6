@@ -10,6 +10,7 @@
                     <hr/>
                     <form th:action="@{'/employee/save'}" method="post" th:object="${employee}">
                         <div class="mb-3">
+                            <input type="hidden" class="form-control" th:field="*{id}" />
                             <label for="firstname" class="form-label">Nombre</label>
                             <input type="text" class="form-control" th:field="*{firstname}"/>
                         </div>
