@@ -5,10 +5,7 @@ import com.example.clase6gtics.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
@@ -35,7 +32,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/new")
-    public String nuevoEmpleadoFrm(Model model) {
+    public String nuevoEmpleadoFrm(Model model,
+                                   @ModelAttribute("employee") Employee employee) {
         model.addAttribute("listaJefes", getListaJefes());
         return "employee/newFrm";
     }
@@ -50,7 +48,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public String guardarEmpleado(Employee employee,
+    public String guardarEmpleado(@ModelAttribute("employee") Employee employee,
                                   @RequestParam("birthdateStr") String birthdateStr,
                                   @RequestParam("hiredateStr") String hiredateStr) {
 
@@ -67,13 +65,15 @@ public class EmployeeController {
     }
 
     @GetMapping("/edit")
-    public String editarEmpleado(Model model, @RequestParam("id") int id) {
+    public String editarEmpleado(Model model, @RequestParam("id") int id,
+                                 @ModelAttribute("employee") Employee employee) {
         Optional<Employee> optional = employeeRepository.findById(id);
 
         if (optional.isPresent()) {
-            model.addAttribute("employee", optional.get());
+            employee = optional.get();
+            model.addAttribute("employee", employee);
             model.addAttribute("listaJefes", getListaJefes());
-            return "employee/editFrm";
+            return "employee/newFrm";
         } else {
             return "redirect:/employee";
         }
