@@ -63,6 +63,7 @@ public class ShipperController {
         if (optShipper.isPresent()) {
             Shipper shipperEdit = optShipper.get();
             model.addAttribute("shipper", shipperEdit);
+            System.out.println(shipper.getShipperId());
             return "shipper/newFrm";
         } else {
             return "redirect:/shipper/list";
