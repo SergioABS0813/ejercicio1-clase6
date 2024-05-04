@@ -49,17 +49,12 @@ public class EmployeeController {
 
     @PostMapping("/save")
     public String guardarEmpleado(@ModelAttribute("employee") Employee employee,
-                                  @RequestParam("birthdateStr") String birthdateStr,
-                                  @RequestParam("hiredateStr") String hiredateStr) {
+                                  @RequestParam("birthdate") String birthdateStr,
+                                  @RequestParam("hiredate") String hiredateStr) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
-        try {
-            employee.setBirthdate(formatter.parse(birthdateStr));
-            employee.setHiredate(formatter.parse(hiredateStr));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        employee.setBirthdate(birthdateStr);
+        employee.setHiredate(hiredateStr);
 
 
         employeeRepository.save(employee);
